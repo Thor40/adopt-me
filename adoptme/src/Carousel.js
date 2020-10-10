@@ -25,7 +25,6 @@ class Carousel extends React.Component {
 
     return (
       <div className="carousel">
-        =
         <img src={photos[active]} alt="animal" />
         <div className="carousel-smaller">
           {photos.map((photo, index) => (
