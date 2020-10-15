@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import pet, { ANIMALS } from "@frontendmasters/pet";
 import Results from "./Results";
 import useDropdown from "./useDropdown";
+import ThemeContext from './ThemeContext';
 
 const SearchParams = () => {
   // A HOOK - [current state, updater] = useState("what will be inside input")
@@ -11,6 +12,8 @@ const SearchParams = () => {
   const [breed, BreedDropdown, setBreed] = useDropdown("Breed", "", breeds);
   // empty array because when you first request from API, there will be no pets listed
   const [pets, setPets] = useState([]);
+  // normal hook that lives in app
+  const [theme, setTheme] = useContext(ThemeContext);
 
   async function requestPets() {
     // pet.animals returns promise, wait here until it finishes and give me back the data
@@ -60,7 +63,20 @@ const SearchParams = () => {
         </label>
         <AnimalDropdown />
         <BreedDropdown />
-        <button>Submit</button>
+        <label htmlFor="theme">
+          Theme
+          <select
+            value={theme}
+            onChange={e => setTheme(e.target.value)}
+            onBlur={e => setTheme(e.target.value)}
+            >
+              <option value="peru">Peru</option>
+              <option value="darkblue">Dark Blue</option>
+              <option value="mediumorchid">Medium Orchid</option>
+              <option value="chartreuse">Chartreuse</option>
+          </select>
+        </label>
+        <button style={{ backgroundColor: theme }}>Submit</button>
       </form>
       <Results pets={pets} />
     </div>
